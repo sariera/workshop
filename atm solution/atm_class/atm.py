@@ -1,43 +1,76 @@
-class ATM:
-    def __init__(self, balance, bank_name):
+class ATM : 
+    
+    def __init__(self, balance, bank_name) :
         self.balance = balance
         self.bank_name = bank_name
+        self.withdrawals_list = []
 
-    def withdraw(self, request):
-        print "Welcome To " + self.bank_name
-        print "Current Balance is: " + str(self.balance)
-        print "#" * 34
-        units = [100, 50, 10, 5, 4, 3, 2, 1]
-        i = 0
-        if   request > self.balance:
-            print("Can't give you all this money !!")
+    def getting_money(self, request):
 
-        elif request <= 0:
-            print("More than zero plz!")
-        elif request <= self.balance:
-            self.balance -= request
-            while request > 0 and i<= len(units):
-                if request//units[i] != 0:
-                    print "Give " + str(request//units[i]) + " of " + str(units[i])
-                    request -= (request//units[i] * units[i])
-                    i += 1
-                else:
-                    i += 1
-        print "#" * 34
+        self.withdrawals_list.append(request)
+
+        self.balance -= request
+
+        while request > 0:
+
+                if request >= 100:
+                    request -= 100
+                    print("give 100")
+
+                elif request >= 50:
+                    request -= 50
+                    print("give 50")
+
+                elif request >= 10:
+                    request -= 10
+                    print("give 10")
+
+                elif request >= 5:
+                    request -= 5
+                    print("give 5")
+
+                elif request < 5:
+                    print("give " + str(request))
+                    request = 0
+            
         return self.balance
 
+    def withdraw(self,request) :
+       
+        print ("==" *10)
+        print ("Welcome to " + self.bank_name)
+        print ("current balance is " + str(self.balance))
+        print ("==" *10)
 
-balance1 = 500
-balance2 = 1000
+        if request > self.balance :
+            print ("You don't have enough money\n")
 
+        elif request <= 0 :
+            print  (str(self.balance - request))
+            
+        else :
+            return self.getting_money(request)
+    
+    def show_withdrawals(self):
+
+        print ("=="*30 +"\nYour withdrawals list from your account in " +self.bank_name + "\n" + "=="*30)
+
+        for withdrawal in self.withdrawals_list :
+
+            print (withdrawal)
+
+balance1 = 5000
+balance2 = 4000
+		
 atm1 = ATM(balance1, "Smart Bank")
 atm2 = ATM(balance2, "Baraka Bank")
 
 atm1.withdraw(277)
 atm1.withdraw(800)
 
-atm2.withdraw(100)
+atm1.show_withdrawals()
+
+atm2.withdraw(1000)
 atm2.withdraw(2000)
-        
-            
-        
+
+atm2.show_withdrawals()
